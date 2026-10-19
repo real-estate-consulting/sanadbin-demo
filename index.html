@@ -1,4 +1,8 @@
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>سند بین</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap">
 <style>
@@ -161,8 +165,11 @@ footer.foot { border-top: 1px solid var(--line); padding-block: 28px 40px; color
 footer.foot p { margin: 0 0 8px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
+</head>
+<body>
 
-<div class="wrap">
+
+<div class="wrap" dir="rtl" lang="fa">
 
 <header class="top">
   <a class="brand" href="#top">سند بین</a>
@@ -399,6 +406,8 @@ footer.foot p { margin: 0 0 8px; }
 </div>
 
 <script>
+try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
+if (!location.hash) { window.scrollTo(0, 0); window.addEventListener("load", function () { if (!location.hash) window.scrollTo(0, 0); }); }
 var LV = {
   low:  { label: "ریسک پایین" },
   mid:  { label: "ریسک متوسط" },
@@ -489,3 +498,6 @@ document.getElementById("leadForm").addEventListener("submit", function (e) {
   status.textContent = "اطلاعات ثبت شد. برای ارسال واقعی، فرم باید به سامانه دریافت درخواست متصل شود.";
 });
 </script>
+
+</body>
+</html>

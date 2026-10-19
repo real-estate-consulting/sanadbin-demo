@@ -1,4 +1,8 @@
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>نقشه بررسی‌های سند بین</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap">
 <style>
@@ -66,9 +70,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .swatch { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
 
-.tiles { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; }
+.tiles { direction: ltr; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; }
 .tile {
-  font: inherit; color: var(--ink); cursor: pointer; text-align: center;
+  direction: rtl; font: inherit; color: var(--ink); cursor: pointer; text-align: center;
   border: 1px solid var(--line); border-radius: 8px; background: var(--bg);
   padding: 6px 3px; min-height: 66px; display: flex; flex-direction: column; justify-content: center; gap: 2px;
   min-width: 0;
@@ -102,8 +106,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
 footer.foot { margin-top: 20px; color: var(--muted); font-size: .85rem; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
+</head>
+<body>
 
-<div class="wrap">
+
+<div class="wrap" dir="rtl" lang="fa">
   <p class="eyebrow">نقشه بررسی‌ها به تفکیک استان</p>
   <h1>بررسی‌های انجام‌شده در کشور</h1>
   <p class="demo-banner"><strong>داده نمونه:</strong> اعداد این صفحه برای نمایش طراحی ساخته شده‌اند و نتیجه بررسی واقعی نیستند.</p>
@@ -140,6 +147,8 @@ footer.foot { margin-top: 20px; color: var(--muted); font-size: .85rem; }
 </div>
 
 <script>
+try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
+if (!location.hash) { window.scrollTo(0, 0); window.addEventListener("load", function () { if (!location.hash) window.scrollTo(0, 0); }); }
 // [name, col, row, total, low, mid, high]  (sample data)
 var P = [
   ["آذربایجان غربی",0,0,42,24,12,4],["آذربایجان شرقی",1,0,58,33,17,5],["اردبیل",2,0,19,11,6,1],["گیلان",3,0,37,21,11,3],
@@ -235,3 +244,6 @@ P.slice().sort(function (a, b) { return b.total - a.total; }).forEach(function (
 
 select(selected);
 </script>
+
+</body>
+</html>
