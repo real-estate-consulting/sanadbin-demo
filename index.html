@@ -1,0 +1,491 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>سند بین</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap">
+<style>
+:root {
+  /* Layout: RTL single column; hero with a risk-scale card; grouped factor cards; two-stage process; tabbed sample report */
+  --bg: #f2f5f4;
+  --surface: #ffffff;
+  --ink: #15262a;
+  --muted: #55676a;
+  --line: #d5dedb;
+  --brand: #0f4c4a;
+  --brand-ink: #ffffff;
+  --brass: #8a6320;
+
+  --low: #1f6b43;   --low-bg: #dff1e6;
+  --mid: #8f5a00;   --mid-bg: #fbecc8;
+  --high: #a8261d;  --high-bg: #fbe0dc;
+  --na: #53656a;    --na-bg: #e4eaea;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1b1d; --surface: #172629; --ink: #e6eeec; --muted: #9fb2b0; --line: #2a3e41;
+    --brand: #6fb8b3; --brand-ink: #0f1b1d; --brass: #d7ae62;
+    --low: #86d6a6;  --low-bg: #1b3a2b;
+    --mid: #ecbb68;  --mid-bg: #3b2f15;
+    --high: #f4958b; --high-bg: #44221f;
+    --na: #aebdbb;   --na-bg: #263436;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1b1d; --surface: #172629; --ink: #e6eeec; --muted: #9fb2b0; --line: #2a3e41;
+  --brand: #6fb8b3; --brand-ink: #0f1b1d; --brass: #d7ae62;
+  --low: #86d6a6;  --low-bg: #1b3a2b;
+  --mid: #ecbb68;  --mid-bg: #3b2f15;
+  --high: #f4958b; --high-bg: #44221f;
+  --na: #aebdbb;   --na-bg: #263436;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Vazirmatn", Tahoma, sans-serif; line-height: 1.9;
+  padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1080px; margin-inline: auto; }
+section { padding-block: 56px; border-top: 1px solid var(--line); }
+h1, h2, h3 { text-wrap: balance; }
+h1 { font-size: clamp(1.9rem, 4.6vw, 2.9rem); line-height: 1.5; font-weight: 800; margin: 0 0 16px; }
+h2 { font-size: 1.6rem; font-weight: 800; margin: 0 0 8px; line-height: 1.6; }
+h3 { font-size: 1.05rem; font-weight: 700; margin: 0 0 4px; line-height: 1.7; }
+p { margin: 0 0 12px; }
+.lead { color: var(--muted); font-size: 1.05rem; max-width: 62ch; }
+.eyebrow { color: var(--brass); font-weight: 600; font-size: .9rem; margin: 0 0 6px; }
+.sub { color: var(--muted); max-width: 62ch; margin-bottom: 28px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--brass); outline-offset: 3px;
+}
+
+header.top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-block: 18px; }
+.brand { font-weight: 800; font-size: 1.25rem; color: var(--brand); text-decoration: none; }
+nav.menu { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+nav.menu a { color: var(--ink); text-decoration: none; font-size: .93rem; }
+nav.menu a:hover { color: var(--brand); }
+
+.btn { display: inline-block; padding: 12px 22px; border-radius: 10px; font: inherit; font-weight: 700; text-decoration: none; border: 1px solid var(--brand); cursor: pointer; }
+.btn.primary { background: var(--brand); color: var(--brand-ink); }
+.btn.ghost { background: transparent; color: var(--brand); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+/* risk chips + meter */
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 1px 12px; border-radius: 999px; font-weight: 700; font-size: .85rem; white-space: nowrap; background: var(--cb); color: var(--cf); }
+.chip.low { --cb: var(--low-bg); --cf: var(--low); }
+.chip.mid { --cb: var(--mid-bg); --cf: var(--mid); }
+.chip.high { --cb: var(--high-bg); --cf: var(--high); }
+.chip.na { --cb: var(--na-bg); --cf: var(--na); }
+.meter { display: inline-flex; gap: 3px; direction: ltr; }
+.meter i { width: 16px; height: 7px; border-radius: 2px; background: var(--line); display: block; }
+.meter.low i:nth-child(1) { background: var(--low); }
+.meter.mid i:nth-child(-n+2) { background: var(--mid); }
+.meter.high i { background: var(--high); }
+
+.hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; padding-block: 48px 64px; }
+@media (max-width: 820px) { .hero { grid-template-columns: 1fr; gap: 28px; padding-block: 28px 44px; } }
+.scale { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.scale h3 { margin-bottom: 10px; }
+.lvl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+.lvl:first-of-type { border-top: none; }
+.lvl p { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.8; }
+.lvl .meter { justify-self: end; }
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; min-width: 0; }
+.panel ul { margin: 10px 0 0; padding: 0; list-style: none; }
+.panel li { padding: 7px 0 7px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .95rem; line-height: 1.8; }
+.panel li:first-child { border-top: none; }
+.panel.yes h3 { color: var(--low); }
+.panel.no h3 { color: var(--na); }
+
+.group { margin-bottom: 30px; }
+.group h3 { font-size: 1rem; color: var(--brass); margin-bottom: 12px; }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; min-width: 0; }
+.card p { color: var(--muted); font-size: .92rem; margin: 0; line-height: 1.8; }
+
+.stages { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { .stages { grid-template-columns: 1fr; } }
+.stage { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: 12px; padding: 22px; min-width: 0; }
+.stage .tag { color: var(--brass); font-weight: 700; font-size: .85rem; margin: 0; }
+.stage dl { margin: 14px 0 0; display: grid; gap: 10px; }
+.stage dt { font-weight: 700; font-size: .9rem; }
+.stage dd { margin: 0; color: var(--muted); font-size: .93rem; line-height: 1.8; }
+.note { margin-top: 18px; padding: 14px 18px; border: 1px dashed var(--na); border-radius: 10px; color: var(--muted); font-size: .95rem; }
+.note strong { color: var(--ink); }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.tab { font: inherit; font-weight: 700; padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+.report { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.report-head { padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; align-items: center; }
+.report-head p { margin: 0; color: var(--muted); font-size: .92rem; }
+.report-head strong { color: var(--ink); }
+.row { display: grid; grid-template-columns: 1fr; gap: 6px; padding: 14px 22px; border-bottom: 1px solid var(--line); }
+@media (min-width: 760px) { .row { grid-template-columns: 190px 170px 1fr; gap: 20px; align-items: start; } }
+.row .f { font-weight: 700; }
+.row .lv { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.row .t { color: var(--muted); font-size: .93rem; line-height: 1.8; }
+.overall { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding: 18px 22px; background: var(--bg); }
+.overall b { font-size: 1.05rem; }
+.overall .t { color: var(--muted); font-size: .93rem; flex: 1 1 260px; }
+.docs { padding: 16px 22px 20px; border-top: 1px solid var(--line); }
+.docs h4 { margin: 0 0 6px; font-size: .95rem; }
+.docs ul { margin: 0; padding-inline-start: 20px; color: var(--muted); font-size: .93rem; line-height: 1.9; }
+.demo { color: var(--muted); font-size: .85rem; margin: 10px 2px 0; }
+
+.team { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
+details p { color: var(--muted); margin: 10px 0 0; }
+summary { cursor: pointer; font-weight: 700; }
+
+form.lead-form { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+@media (max-width: 620px) { .form-grid { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 6px; margin-bottom: 14px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-weight: 600; font-size: .95rem; }
+input, select, textarea { font: inherit; width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
+textarea { min-height: 100px; resize: vertical; }
+.status { min-height: 1.9em; color: var(--muted); font-size: .95rem; margin: 6px 0 0; }
+
+.contact-box { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; }
+.contact-box .tag { color: var(--muted); font-size: .9rem; margin: 0 0 2px; }
+.contact-box .num { font-weight: 800; font-size: 1.3rem; margin: 0; font-variant-numeric: tabular-nums; user-select: all; }
+.contact-box .status { color: var(--muted); font-size: .9rem; }
+footer.foot { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: .88rem; }
+footer.foot p { margin: 0 0 8px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="#top">سند بین</a>
+  <nav class="menu" aria-label="منوی اصلی">
+    <a href="#scope">دامنه کار</a>
+    <a href="#factors">عوامل ریسک</a>
+    <a href="#stages">مراحل</a>
+    <a href="#sample">نمونه گزارش</a>
+    <a href="#experts">کارشناسان</a>
+    <a href="#faq">پرسش‌ها</a>
+    <a href="#contact">درخواست</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div>
+    <p class="eyebrow">کارشناسی ریسک سندی ملک</p>
+    <h1>مشکلات سندی ملک را پیش از خرید بسنجید</h1>
+    <p class="lead">سند بین مدارک ملک را بررسی می‌کند و احتمال بروز مشکل در آینده را، از ورثه و کاربری تا طرح هادی و تفکیکی، برای هر عامل جداگانه در سه سطح پایین، متوسط و بالا اعلام می‌کند. در پایان یک ریسک کلی ارائه می‌شود.</p>
+    <div class="actions">
+      <a class="btn primary" href="#contact">درخواست بررسی اولیه</a>
+      <a class="btn ghost" href="#sample">مشاهده نمونه گزارش</a>
+    </div>
+  </div>
+
+  <aside class="scale" aria-label="سطح‌های ریسک">
+    <h3>سطح‌های ریسک در گزارش</h3>
+    <div class="lvl"><span class="chip low">ریسک پایین</span><span class="meter low" aria-hidden="true"><i></i><i></i><i></i></span><p>بر پایه مدارک بررسی‌شده، مانع سندی مشخصی دیده نشد.</p></div>
+    <div class="lvl"><span class="chip mid">ریسک متوسط</span><span class="meter mid" aria-hidden="true"><i></i><i></i><i></i></span><p>موردی وجود دارد که باید پیش از معامله روشن یا در قرارداد پیش‌بینی شود.</p></div>
+    <div class="lvl"><span class="chip high">ریسک بالا</span><span class="meter high" aria-hidden="true"><i></i><i></i><i></i></span><p>احتمال جدی مشکل سندی یا حقوقی پس از خرید وجود دارد.</p></div>
+    <div class="lvl"><span class="chip na">ارزیابی نشد</span><span class="meter na" aria-hidden="true"><i></i><i></i><i></i></span><p>مدارک برای سنجش این عامل کافی نیست. این وضعیت به معنی ریسک پایین نیست.</p></div>
+  </aside>
+</div>
+
+<section id="scope">
+  <p class="eyebrow">دامنه کار</p>
+  <h2>کارشناسی بر پایه مدارک</h2>
+  <p class="sub">خدمت ما بررسی مدارک و تعیین ریسک مشکلات سندی احتمالی در آینده است. موارد دیگر معامله در این خدمت قرار ندارد.</p>
+  <div class="cols">
+    <div class="panel yes">
+      <h3>آنچه بررسی می‌شود</h3>
+      <ul>
+        <li>مدارک مالکیت و سابقه سند، شامل سند رسمی، سند عادی و وکالت‌نامه</li>
+        <li>وضعیت مالک و ورثه، توقیف، بازداشت و رهن</li>
+        <li>کاربری، طرح هادی، تفکیکی، افراز و حریم‌های قانونی</li>
+        <li>سنجش جداگانه ریسک هر عامل و ارائه ریسک کلی</li>
+      </ul>
+    </div>
+    <div class="panel no">
+      <h3>آنچه در این خدمت نیست</h3>
+      <ul>
+        <li>بازدید میدانی و بررسی وضعیت فیزیکی یا فنی ساختمان</li>
+        <li>ارزیابی قیمت و ارزش روز ملک</li>
+        <li>وکالت، تنظیم قرارداد یا طرح دعوا</li>
+        <li>مذاکره با فروشنده یا پیگیری انتقال سند در دفترخانه</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="factors">
+  <p class="eyebrow">عوامل ریسک</p>
+  <h2>هر عامل جداگانه سنجیده می‌شود</h2>
+  <p class="sub">عوامل زیر بر حسب نوع ملک و مدارک موجود بررسی می‌شوند. در هر پرونده ممکن است عوامل دیگری هم اضافه شود.</p>
+
+  <div class="group">
+    <h3>مالکیت و اشخاص</h3>
+    <div class="grid">
+      <article class="card"><h3>ورثه و انحصار وراثت</h3><p>فوت مالک، سهم‌الارث، رضایت همه ورثه و وجود وارث صغیر یا غایب.</p></article>
+      <article class="card"><h3>وکالت و سند عادی</h3><p>معامله با وکالت‌نامه، قولنامه یا مبایعه‌نامه دست‌به‌دست و اعتبار آن‌ها.</p></article>
+      <article class="card"><h3>ممنوع‌المعامله و حجر</h3><p>محدودیت قانونی مالک یا فروشنده برای انتقال ملک.</p></article>
+      <article class="card"><h3>توقیف، بازداشت و رهن</h3><p>توقیف قضایی، بازداشت ثبتی، رهن بانکی و بدهی‌های مرتبط با ملک.</p></article>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>وضعیت سند</h3>
+    <div class="grid">
+      <article class="card"><h3>نوع سند و مشاعی بودن</h3><p>شش‌دانگ یا مشاع، سند تک‌برگ یا دفترچه‌ای، و وجود سند معارض.</p></article>
+      <article class="card"><h3>مغایرت مساحت و حدود</h3><p>اختلاف مساحت سند و نقشه، تداخل پلاک و حدود اربعه.</p></article>
+      <article class="card"><h3>معارض ثبتی و دعاوی</h3><p>ثبت اعتراض، ادعای مالکیت دیگران و دعاوی جاری مرتبط با ملک.</p></article>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>مقررات ملکی و محدودیت‌های قانونی</h3>
+    <div class="grid">
+      <article class="card"><h3>کاربری</h3><p>تطبیق کاربری با هدف خرید، با توجه به طرح تفصیلی یا جامع و محدودیت تغییر کاربری باغ و زراعی.</p></article>
+      <article class="card"><h3>طرح هادی و محدوده روستا</h3><p>قرارگیری ملک در محدوده طرح هادی، حدود روستا و شرایط صدور مجوز ساخت.</p></article>
+      <article class="card"><h3>تفکیکی و افراز</h3><p>اعتبار تفکیک، وجود صورتمجلس تفکیکی و امکان صدور سند مستقل برای قطعه.</p></article>
+      <article class="card"><h3>حریم و اراضی دولتی</h3><p>حریم رودخانه و راه، منابع طبیعی، موقوفه و اراضی ملی‌شده.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="stages">
+  <p class="eyebrow">مراحل کار</p>
+  <h2>دو مرحله: بررسی اولیه و بررسی نهایی</h2>
+  <p class="sub">می‌توانید با مدارک ناقص شروع کنید. در بررسی اولیه به شما اعلام می‌شود چه مدارکی برای بررسی دقیق‌تر لازم است.</p>
+  <div class="stages">
+    <article class="stage">
+      <p class="tag">مرحله اول</p>
+      <h3>بررسی اولیه</h3>
+      <dl>
+        <div><dt>ورودی</dt><dd>مشخصات اولیه ملک و مدارکی که اکنون در دست دارید.</dd></div>
+        <div><dt>انجام کار</dt><dd>بررسی اولیه مدارک و سنجش ریسک عواملی که مدارک آن‌ها موجود است.</dd></div>
+        <div><dt>خروجی</dt><dd>گزارش اولیه و فهرست مدارک تکمیلی که توصیه می‌شود تهیه کنید.</dd></div>
+      </dl>
+    </article>
+    <article class="stage">
+      <p class="tag">مرحله دوم</p>
+      <h3>بررسی نهایی</h3>
+      <dl>
+        <div><dt>ورودی</dt><dd>فهرست کامل مدارک مورد نیاز.</dd></div>
+        <div><dt>انجام کار</dt><dd>سنجش جداگانه ریسک هر عامل با مدارک کامل.</dd></div>
+        <div><dt>خروجی</dt><dd>گزارش نهایی شامل ریسک هر عامل، ریسک کلی و نظر نهایی.</dd></div>
+      </dl>
+    </article>
+  </div>
+  <p class="note"><strong>اگر مدارک کافی نباشد:</strong> در هر دو مرحله ممکن است ارزیابی ریسک انجام نشود. در این حالت گزارش «ارزیابی نشد» را همراه با دلیل و مدارک لازم اعلام می‌کند.</p>
+</section>
+
+<section id="sample">
+  <p class="eyebrow">نمونه گزارش</p>
+  <h2>گزارش اولیه و گزارش نهایی چه شکلی دارند؟</h2>
+  <p class="sub">دو نمونه نمایشی از یک پرونده فرضی را ببینید.</p>
+  <div class="tabs" role="tablist" aria-label="نوع گزارش">
+    <button class="tab" role="tab" id="tab-initial" aria-selected="true" aria-controls="report" data-key="initial">گزارش بررسی اولیه</button>
+    <button class="tab" role="tab" id="tab-final" aria-selected="false" aria-controls="report" data-key="final">گزارش بررسی نهایی</button>
+  </div>
+  <div class="report" id="report" role="tabpanel" aria-live="polite"></div>
+  <p class="demo">داده‌های این نمونه نمایشی است و به هیچ ملک واقعی مربوط نیست.</p>
+</section>
+
+<section id="experts">
+  <p class="eyebrow">کارشناسان</p>
+  <h2>بررسی به دست اهل فن</h2>
+  <p class="sub">هر پرونده را متخصصان ثبت اسناد، سردفتران و دفتریاران، و کارشناسان محلی منطقه بررسی می‌کنند.</p>
+  <div class="team">
+    <article class="card"><h3>متخصصان ثبت اسناد</h3><p>سابقه ثبتی، نوع و اعتبار سند، توقیف، بازداشت و رهن، و تحلیل زنجیره انتقال.</p></article>
+    <article class="card"><h3>سردفتران و دفتریاران</h3><p>صحت اسناد رسمی و عادی، وکالت‌نامه‌ها، گواهی انحصار وراثت و شرایط انتقال.</p></article>
+    <article class="card"><h3>کارشناسان محلی</h3><p>شناخت وضعیت منطقه: کاربری، طرح هادی، حدود روستا و تفکیک‌های رایج در محل.</p></article>
+  </div>
+</section>
+
+<section id="faq">
+  <p class="eyebrow">پرسش‌های متداول</p>
+  <h2>پاسخ به پرسش‌های رایج</h2>
+  <details open>
+    <summary>اگر مدارک من کامل نباشد چه می‌شود؟</summary>
+    <p>در بررسی اولیه، عواملی که مدارک آن‌ها موجود است سنجیده می‌شود و بقیه «ارزیابی نشد» می‌ماند. فهرست مدارک تکمیلی هم به شما اعلام می‌شود. در بررسی نهایی هم اگر مدارک کافی نباشد، ارزیابی ریسک انجام نمی‌شود.</p>
+  </details>
+  <details>
+    <summary>ریسک پایین یعنی ملک بدون مشکل است؟</summary>
+    <p>خیر. ریسک پایین یعنی با مدارک ارائه‌شده و تا زمان بررسی، مانع سندی مشخصی دیده نشده است. گزارش تضمین نمی‌دهد که در آینده هیچ مشکلی پیش نیاید.</p>
+  </details>
+  <details>
+    <summary>ریسک کلی چگونه اعلام می‌شود؟</summary>
+    <p>ابتدا ریسک هر عامل جداگانه سنجیده می‌شود. سپس کارشناسان بر پایه آن‌ها یک ریسک کلی در یکی از سه سطح پایین، متوسط یا بالا اعلام می‌کنند.</p>
+  </details>
+  <details>
+    <summary>آیا ملک بازدید می‌شود یا قیمت‌گذاری انجام می‌شود؟</summary>
+    <p>خیر. کارشناسی ما فقط بر پایه مدارک است و بازدید میدانی، ارزیابی فنی ساختمان و قیمت‌گذاری را شامل نمی‌شود.</p>
+  </details>
+  <details>
+    <summary>آیا گزارش جایگزین مشاوره حقوقی است؟</summary>
+    <p>خیر. گزارش سند بین سنجش ریسک بر پایه مدارک است و جایگزین مشاوره حقوقی یا وکالت نیست. تصمیم نهایی خرید با خریدار است.</p>
+  </details>
+  <details>
+    <summary>هزینه و زمان بررسی چقدر است؟</summary>
+    <p>هزینه و زمان به نوع ملک، تعداد مدارک و پیچیدگی پرونده بستگی دارد. پس از ثبت درخواست، برآورد برای شما ارسال می‌شود.</p>
+  </details>
+</section>
+
+<section id="contact">
+  <p class="eyebrow">درخواست بررسی</p>
+  <h2>مشخصات اولیه ملک را ثبت کنید</h2>
+  <p class="sub">برای شروع، مشخصات کلی ملک کافی است. فهرست مدارک تکمیلی در گزارش اولیه به شما اعلام می‌شود.</p>
+  <div class="contact-box">
+    <div>
+      <p class="tag">تماس تلفنی</p>
+      <p class="num" dir="ltr" id="phoneNum">۰۹xx-xxx-xxxx</p>
+    </div>
+    <button class="btn ghost" type="button" id="copyPhone">کپی شماره</button>
+    <span class="status" id="copyStatus" role="status" aria-live="polite"></span>
+  </div>
+  <form class="lead-form" id="leadForm" novalidate>
+    <div class="form-grid">
+      <div class="field"><label for="name">نام و نام خانوادگی</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="phone">شماره همراه</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+      <div class="field"><label for="city">شهر، شهرستان یا روستا</label><input id="city" name="city" type="text" required></div>
+      <div class="field"><label for="type">نوع ملک</label>
+        <select id="type" name="type">
+          <option>آپارتمان یا واحد مسکونی شهری</option>
+          <option>خانه و ویلا</option>
+          <option>زمین یا باغ</option>
+          <option>ملک روستایی (در محدوده طرح هادی)</option>
+          <option>واحد تجاری</option>
+        </select>
+      </div>
+      <div class="field"><label for="doc">نوع سند موجود</label>
+        <select id="doc" name="doc">
+          <option>سند رسمی تک‌برگ</option>
+          <option>سند رسمی دفترچه‌ای</option>
+          <option>قولنامه یا سند عادی</option>
+          <option>وکالت‌نامه</option>
+          <option>هنوز مدرکی ندارم</option>
+        </select>
+      </div>
+      <div class="field"><label for="stage">مرحله مورد نظر</label>
+        <select id="stage" name="stage">
+          <option>بررسی اولیه</option>
+          <option>بررسی نهایی (مدارک کامل دارم)</option>
+        </select>
+      </div>
+      <div class="field full"><label for="msg">توضیحات</label><textarea id="msg" name="msg" placeholder="مثلاً: مالک فوت کرده و ورثه برای فروش اقدام می‌کنند؛ زمین کاربری باغ دارد."></textarea></div>
+    </div>
+    <button class="btn primary" type="submit">ثبت درخواست</button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </form>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p><strong>سند بین</strong> — کارشناسی ریسک سندی ملک بر پایه مدارک.</p>
+  <p>این صفحه برای معرفی خدمت است و مشاوره حقوقی، مالی یا سرمایه‌گذاری محسوب نمی‌شود. گزارش‌ها بر پایه مدارک ارائه‌شده تنظیم می‌شوند و تضمین‌کننده نبود مشکل در آینده نیستند.</p>
+  <p>سند بین — sanadbin.com</p>
+  <p>© ۱۴۰۵ سند بین. تمامی حقوق محفوظ است.</p>
+</footer>
+
+</div>
+
+<script>
+var LV = {
+  low:  { label: "ریسک پایین" },
+  mid:  { label: "ریسک متوسط" },
+  high: { label: "ریسک بالا" },
+  na:   { label: "ارزیابی نشد" }
+};
+
+var REPORTS = {
+  initial: {
+    head: ["نوع گزارش: <strong>بررسی اولیه</strong>", "ملک: قطعه زمین باغ، سند تک‌برگ، حومه شهر"],
+    rows: [
+      ["ورثه و انحصار وراثت", "mid", "مالک اصلی فوت کرده است. گواهی انحصار وراثت ارائه نشده و نمی‌توان رضایت همه ورثه را سنجید."],
+      ["نوع سند و مشاعی بودن", "low", "سند رسمی تک‌برگ شش‌دانگ است و مشاعی بودن دیده نشد."],
+      ["کاربری", "na", "استعلام کاربری در مدارک موجود نیست."],
+      ["تفکیکی و افراز", "na", "نقشه و صورتمجلس تفکیکی ارائه نشده است."],
+      ["توقیف، بازداشت و رهن", "na", "برگ استعلام ثبتی به‌روز در مدارک نیست."]
+    ],
+    overall: ["na", "ریسک کلی: ارزیابی نشد", "برای ارزیابی کلی، مدارک تکمیلی لازم است. توصیه می‌شود فهرست زیر را تهیه کنید."],
+    docs: ["گواهی انحصار وراثت و مدارک هویتی ورثه", "برگ استعلام ثبتی به‌روز", "استعلام کاربری ملک از مرجع مربوط", "نقشه و صورتمجلس تفکیکی قطعه"]
+  },
+  final: {
+    head: ["نوع گزارش: <strong>بررسی نهایی</strong>", "ملک: قطعه زمین باغ، سند تک‌برگ، حومه شهر"],
+    rows: [
+      ["ورثه و انحصار وراثت", "mid", "گواهی انحصار وراثت موجود است، اما رضایت یکی از ورثه به‌صورت مکتوب احراز نشده است."],
+      ["نوع سند و مشاعی بودن", "low", "سند رسمی تک‌برگ شش‌دانگ است و سند معارضی دیده نشد."],
+      ["کاربری", "high", "کاربری ملک باغ است. تغییر کاربری و ساخت‌وساز با محدودیت جدی روبه‌روست."],
+      ["تفکیکی و افراز", "low", "تفکیک قطعه با مدارک موجود هم‌خوان است و صورتمجلس تفکیکی ارائه شده است."],
+      ["توقیف، بازداشت و رهن", "low", "در استعلام ثبتی به‌روز، توقیف و رهنی دیده نشد."]
+    ],
+    overall: ["high", "ریسک کلی: بالا", "اگر هدف خرید ساخت‌وساز است، محدودیت کاربری مهم‌ترین مانع است. موضوع ورثه نیز باید پیش از معامله روشن شود."],
+    docs: []
+  }
+};
+
+function meter(level) {
+  return '<span class="meter ' + level + '" aria-hidden="true"><i></i><i></i><i></i></span>';
+}
+function chip(level) {
+  return '<span class="chip ' + level + '">' + LV[level].label + '</span>';
+}
+function render(key) {
+  var r = REPORTS[key];
+  var h = '<div class="report-head"><p>' + r.head[0] + '</p><p>' + r.head[1] + '</p></div>';
+  r.rows.forEach(function (x) {
+    h += '<div class="row"><div class="f">' + x[0] + '</div><div class="lv">' + chip(x[1]) + meter(x[1]) + '</div><div class="t">' + x[2] + '</div></div>';
+  });
+  h += '<div class="overall">' + chip(r.overall[0]) + '<b>' + r.overall[1] + '</b><span class="t">' + r.overall[2] + '</span></div>';
+  if (r.docs.length) {
+    h += '<div class="docs"><h4>مدارک تکمیلی پیشنهادی</h4><ul>' + r.docs.map(function (d) { return '<li>' + d + '</li>'; }).join("") + '</ul></div>';
+  }
+  document.getElementById("report").innerHTML = h;
+}
+render("initial");
+Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (b) {
+  b.addEventListener("click", function () {
+    Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) { t.setAttribute("aria-selected", t === b ? "true" : "false"); });
+    render(b.getAttribute("data-key"));
+  });
+});
+
+document.getElementById("copyPhone").addEventListener("click", function () {
+  var num = document.getElementById("phoneNum").textContent.trim();
+  var msg = document.getElementById("copyStatus");
+  var fallback = function () {
+    var r = document.createRange();
+    r.selectNodeContents(document.getElementById("phoneNum"));
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+    msg.textContent = "شماره انتخاب شد. آن را کپی کنید.";
+  };
+  try {
+    navigator.clipboard.writeText(num).then(function () {
+      msg.textContent = "شماره کپی شد.";
+    }, fallback);
+  } catch (err) {
+    fallback();
+  }
+});
+
+document.getElementById("leadForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var status = document.getElementById("status");
+  if (!document.getElementById("name").value.trim() || !document.getElementById("phone").value.trim() || !document.getElementById("city").value.trim()) {
+    status.textContent = "لطفاً نام، شماره همراه و محل ملک را تکمیل کنید.";
+    return;
+  }
+  status.textContent = "اطلاعات ثبت شد. برای ارسال واقعی، فرم باید به سامانه دریافت درخواست متصل شود.";
+});
+</script>

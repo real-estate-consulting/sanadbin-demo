@@ -1,0 +1,237 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>نقشه بررسی‌های سند بین</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap">
+<style>
+:root {
+  /* Layout: KPI row, province tile map (schematic, not to scale), selected-province detail panel, ranked list */
+  --bg: #f2f5f4;
+  --surface: #ffffff;
+  --ink: #15262a;
+  --muted: #55676a;
+  --line: #d5dedb;
+  --brand: #0f4c4a;
+  --brand-ink: #ffffff;
+  --brass: #8a6320;
+  --low: #1f6b43;
+  --mid: #b07400;
+  --high: #a8261d;
+  --na: #9aa9ab;
+  --sel: #8a6320;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1b1d; --surface: #172629; --ink: #e6eeec; --muted: #9fb2b0; --line: #2a3e41;
+    --brand: #6fb8b3; --brand-ink: #0f1b1d; --brass: #d7ae62;
+    --low: #86d6a6; --mid: #ecbb68; --high: #f4958b; --na: #5d7074; --sel: #d7ae62;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1b1d; --surface: #172629; --ink: #e6eeec; --muted: #9fb2b0; --line: #2a3e41;
+  --brand: #6fb8b3; --brand-ink: #0f1b1d; --brass: #d7ae62;
+  --low: #86d6a6; --mid: #ecbb68; --high: #f4958b; --na: #5d7074; --sel: #d7ae62;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Vazirmatn", Tahoma, sans-serif; line-height: 1.8;
+  padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1080px; margin-inline: auto; padding-block: 28px 40px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; }
+h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 12px; }
+.eyebrow { color: var(--brass); font-weight: 700; font-size: .88rem; margin: 0 0 4px; }
+.muted { color: var(--muted); font-size: .92rem; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+.demo-banner {
+  margin-top: 16px; padding: 10px 14px; border-radius: 10px;
+  border: 1px dashed var(--brass); color: var(--ink); font-size: .92rem;
+}
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 20px 0; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.kpi .v { font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--muted); font-size: .88rem; }
+
+.layout { display: grid; grid-template-columns: 1.6fr 1fr; gap: 18px; align-items: start; }
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin-bottom: 12px; font-size: .85rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+
+.tiles { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; }
+.tile {
+  font: inherit; color: var(--ink); cursor: pointer; text-align: center;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--bg);
+  padding: 6px 3px; min-height: 66px; display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  min-width: 0;
+}
+.tile .n { font-weight: 800; font-size: .95rem; font-variant-numeric: tabular-nums; }
+.tile .p { font-size: .66rem; line-height: 1.5; color: inherit; opacity: .9; overflow-wrap: anywhere; }
+.tile[aria-pressed="true"] { outline: 2px solid var(--sel); outline-offset: 2px; }
+@media (max-width: 520px) { .tile .p { font-size: .6rem; } .tiles { gap: 4px; } }
+
+.detail h2 { margin-bottom: 4px; }
+.bar { display: flex; height: 16px; border-radius: 999px; overflow: hidden; background: var(--line); margin: 14px 0 8px; }
+.bar i { display: block; height: 100%; }
+.bar .lo { background: var(--low); } .bar .mi { background: var(--mid); } .bar .hi { background: var(--high); } .bar .na { background: var(--na); }
+.rows { margin: 0; padding: 0; list-style: none; }
+.rows li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: .93rem; }
+.rows li:first-child { border-top: none; }
+.rows b { font-variant-numeric: tabular-nums; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-inline-end: 6px; }
+
+.rank { display: grid; gap: 8px; }
+.rank button {
+  font: inherit; color: var(--ink); background: none; border: 0; padding: 4px 0; cursor: pointer;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; text-align: start;
+}
+.rank .name { font-size: .92rem; overflow-wrap: anywhere; }
+.rank .cnt { font-variant-numeric: tabular-nums; font-weight: 700; font-size: .9rem; }
+.rank .track { grid-column: 1 / -1; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.rank .track i { display: block; height: 100%; background: var(--brand); border-radius: 999px; }
+.rank button[aria-pressed="true"] .name { color: var(--brass); font-weight: 800; }
+
+footer.foot { margin-top: 20px; color: var(--muted); font-size: .85rem; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">نقشه بررسی‌ها به تفکیک استان</p>
+  <h1>بررسی‌های انجام‌شده در کشور</h1>
+  <p class="demo-banner"><strong>داده نمونه:</strong> اعداد این صفحه برای نمایش طراحی ساخته شده‌اند و نتیجه بررسی واقعی نیستند.</p>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="layout">
+    <section class="panel" aria-labelledby="mapTitle">
+      <h2 id="mapTitle">نقشه استان‌ها</h2>
+      <p class="muted" style="margin:0 0 12px">نمای شماتیک و نه مقیاس‌دار؛ هر خانه یک استان است. شدت رنگ نشان‌دهنده تعداد بررسی‌هاست.</p>
+      <div class="legend" aria-hidden="true">
+        <span><i class="swatch" style="background: color-mix(in srgb, var(--brand) 15%, var(--surface))"></i>کم</span>
+        <span><i class="swatch" style="background: color-mix(in srgb, var(--brand) 45%, var(--surface))"></i>متوسط</span>
+        <span><i class="swatch" style="background: color-mix(in srgb, var(--brand) 75%, var(--surface))"></i>زیاد</span>
+        <span><i class="swatch" style="background: var(--brand)"></i>خیلی زیاد</span>
+      </div>
+      <div class="tiles" id="tiles"></div>
+    </section>
+
+    <aside class="panel detail" aria-live="polite">
+      <h2 id="selName">—</h2>
+      <p class="muted" id="selTotal"></p>
+      <div class="bar" id="selBar" role="img" aria-label="توزیع سطح ریسک"></div>
+      <ul class="rows" id="selRows"></ul>
+    </aside>
+  </div>
+
+  <section class="panel" style="margin-top:18px" aria-labelledby="rankTitle">
+    <h2 id="rankTitle">رتبه‌بندی استان‌ها بر اساس تعداد بررسی</h2>
+    <div class="rank" id="rank"></div>
+  </section>
+
+  <footer class="foot">داده‌های نمونه برای نمایش طراحی‌اند. پس از اتصال ثبت بررسی‌ها، این صفحه آمار واقعی را نشان می‌دهد.</footer>
+</div>
+
+<script>
+// [name, col, row, total, low, mid, high]  (sample data)
+var P = [
+  ["آذربایجان غربی",0,0,42,24,12,4],["آذربایجان شرقی",1,0,58,33,17,5],["اردبیل",2,0,19,11,6,1],["گیلان",3,0,37,21,11,3],
+  ["مازندران",4,0,64,36,19,6],["گلستان",5,0,22,12,7,2],["خراسان شمالی",6,0,11,6,3,1],
+  ["کردستان",0,1,9,5,3,1],["زنجان",1,1,15,9,4,1],["قزوین",2,1,26,15,8,2],["تهران",3,1,210,118,62,21],
+  ["سمنان",4,1,12,7,3,1],["خراسان رضوی",5,1,96,55,27,9],["خراسان جنوبی",6,1,8,5,2,0],
+  ["کرمانشاه",0,2,27,15,8,2],["همدان",1,2,18,10,5,1],["البرز",2,2,61,34,18,6],["مرکزی",3,2,24,13,7,2],
+  ["قم",4,2,20,11,6,1],["یزد",5,2,16,9,4,1],
+  ["ایلام",0,3,6,3,2,0],["لرستان",1,3,14,8,4,1],["کهگیلویه و بویراحمد",2,3,5,3,1,0],["اصفهان",3,3,71,40,21,7],
+  ["کرمان",5,3,29,16,9,2],
+  ["خوزستان",1,4,48,26,14,4],["چهارمحال و بختیاری",2,4,7,4,2,0],["فارس",3,4,53,30,16,5],["سیستان و بلوچستان",6,4,10,5,3,1],
+  ["بوشهر",2,5,17,10,5,1],["هرمزگان",4,5,23,13,7,2]
+].map(function (r) {
+  return { name: r[0], col: r[1], row: r[2], total: r[3], low: r[4], mid: r[5], high: r[6], na: r[3] - r[4] - r[5] - r[6] };
+});
+
+var fa = function (n) { return n.toLocaleString("fa-IR"); };
+var pct = function (a, b) { return b ? Math.round((a / b) * 100) : 0; };
+
+var totalAll = 0, lowAll = 0, midAll = 0, highAll = 0, naAll = 0;
+P.forEach(function (p) { totalAll += p.total; lowAll += p.low; midAll += p.mid; highAll += p.high; naAll += p.na; });
+var maxTotal = Math.max.apply(null, P.map(function (p) { return p.total; }));
+
+document.getElementById("kpis").innerHTML =
+  '<div class="kpi"><div class="v">' + fa(totalAll) + '</div><div class="l">کل بررسی‌ها</div></div>' +
+  '<div class="kpi"><div class="v">' + fa(P.length) + '</div><div class="l">استان دارای بررسی</div></div>' +
+  '<div class="kpi"><div class="v">' + fa(pct(highAll, totalAll)) + '٪</div><div class="l">سهم ریسک بالا</div></div>' +
+  '<div class="kpi"><div class="v">' + fa(pct(naAll, totalAll)) + '٪</div><div class="l">ارزیابی‌نشده به دلیل مدارک ناکافی</div></div>';
+
+function tint(total) {
+  var ratio = total / maxTotal;
+  var step = ratio > 0.6 ? 100 : ratio > 0.3 ? 75 : ratio > 0.1 ? 45 : 15;
+  return "color-mix(in srgb, var(--brand) " + step + "%, var(--surface))";
+}
+function textOn(total) {
+  return (total / maxTotal) > 0.6 ? "var(--brand-ink)" : "var(--ink)";
+}
+
+var selected = "تهران";
+function select(name) {
+  selected = name;
+  var p = P.filter(function (x) { return x.name === name; })[0];
+  document.getElementById("selName").textContent = p.name;
+  document.getElementById("selTotal").textContent = "مجموع بررسی‌ها: " + fa(p.total);
+  document.getElementById("selBar").innerHTML =
+    '<i class="lo" style="width:' + pct(p.low, p.total) + '%"></i>' +
+    '<i class="mi" style="width:' + pct(p.mid, p.total) + '%"></i>' +
+    '<i class="hi" style="width:' + pct(p.high, p.total) + '%"></i>' +
+    '<i class="na" style="width:' + pct(p.na, p.total) + '%"></i>';
+  document.getElementById("selRows").innerHTML =
+    row("var(--low)", "ریسک پایین", p.low, p.total) +
+    row("var(--mid)", "ریسک متوسط", p.mid, p.total) +
+    row("var(--high)", "ریسک بالا", p.high, p.total) +
+    row("var(--na)", "ارزیابی نشد", p.na, p.total);
+  document.querySelectorAll(".tile").forEach(function (t) {
+    t.setAttribute("aria-pressed", t.getAttribute("data-name") === name ? "true" : "false");
+  });
+  document.querySelectorAll(".rank button").forEach(function (b) {
+    b.setAttribute("aria-pressed", b.getAttribute("data-name") === name ? "true" : "false");
+  });
+}
+function row(color, label, n, total) {
+  return '<li><span><i class="dot" style="background:' + color + '"></i>' + label + '</span><b>' + fa(n) + ' (' + fa(pct(n, total)) + '٪)</b></li>';
+}
+
+var tiles = document.getElementById("tiles");
+P.forEach(function (p) {
+  var b = document.createElement("button");
+  b.className = "tile";
+  b.type = "button";
+  b.setAttribute("data-name", p.name);
+  b.setAttribute("aria-pressed", "false");
+  b.style.gridColumn = (p.col + 1);
+  b.style.gridRow = (p.row + 1);
+  b.style.background = tint(p.total);
+  b.style.color = textOn(p.total);
+  b.innerHTML = '<span class="n">' + fa(p.total) + '</span><span class="p">' + p.name + '</span>';
+  b.addEventListener("click", function () { select(p.name); });
+  tiles.appendChild(b);
+});
+
+var rank = document.getElementById("rank");
+P.slice().sort(function (a, b) { return b.total - a.total; }).forEach(function (p) {
+  var b = document.createElement("button");
+  b.type = "button";
+  b.setAttribute("data-name", p.name);
+  b.setAttribute("aria-pressed", "false");
+  b.innerHTML = '<span class="name">' + p.name + '</span><span class="cnt">' + fa(p.total) + '</span>' +
+    '<span class="track"><i style="width:' + pct(p.total, maxTotal) + '%"></i></span>';
+  b.addEventListener("click", function () { select(p.name); });
+  rank.appendChild(b);
+});
+
+select(selected);
+</script>
